@@ -1,18 +1,23 @@
 package view;
+/*
+ * author Bilal Bari and Brandon Berrios
+ */
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-//import javafx.scene.control.ListColumn;
 import javafx.scene.control.ListView;
-import application.SongLib;
 
 
 public class MusicOverviewController {
     @FXML
     private ListView<Music> MusicTable;
     @FXML
-    private ListCell<Music> SongTitleColumn;
+    private ListView<Music> SongTitleColumn;
+    @FXML
+    private ListView<Music> ArtistColumn;
    
 
     @FXML
@@ -40,13 +45,13 @@ public class MusicOverviewController {
      * after the fxml file has been loaded.
      * @param <SongTitleColumn>
      */
-    /*@FXML
-    private <SongTitleColumn> void initialize() {
+    @FXML
+    private void initialize() {
         // Initialize the Music table with the two columns.
-        SongTitleColumn.setCellValueFactory(cellData -> cellData.getValue().SongTitleProperty());
-        Object ArtistColumn;
-		ArtistColumn.setCellValueFactory(cellData -> cellData.getValue().ArtistProperty());
-    }*/
+        SongTitleColumn.setCellFactory(cellData -> cellData.getValue().SongTitleProperty());
+       
+		ArtistColumn.setCellFactory(cellData -> cellData.getValue().ArtistProperty());
+    }
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -54,22 +59,22 @@ public class MusicOverviewController {
      * 
      * @param SongLib
      */
-    public void setSongLib(SongLib SongLib) {
+    public <SongLib> void setSongLib(SongLib SongLib) {
         this.SongLib = SongLib;
 
         // Add observable list data to the table
-        MusicTable.setItems(((SongLib) SongLib).getMusicData());
+        MusicTable.setItems(((Object) SongLib).getMusicData());
     }
     
     /**
-     * Fills all text fields to show details about the person.
-     * If the specified person is null, all text fields are cleared.
+     * Fills all text fields to show details about the Music.
+     * If the specified Music is null, all text fields are cleared.
      * 
-     * @param person the person or null
+     * @param Music the Music or null
      */
-    private void showPersonDetails(Music music) {
+    private void showMusicDetails(Music music) {
         if (music != null) {
-            // Fill the labels with info from the person object.
+            // Fill the labels with info from the Music object.
             ArtistLabel.setText(music.getSongTitle());
             ArtistLabel.setText(music.getArtist());
             AlbumLabel.setText(music.getAlbum());
@@ -78,12 +83,33 @@ public class MusicOverviewController {
             // TODO: We need a way to convert the birthday into a String! 
             // birthdayLabel.setText(...);
         } else {
-            // Person is null, remove all the text.
+            // Music is null, remove all the text.
             SongTitleLabel.setText("");
             ArtistLabel.setText("");
             AlbumLabel.setText("");
             YearLabel.setText("");
             
+        }
+    }
+
+    
+    /**
+     * Called when the user clicks on the delete button.
+     */
+    @FXML
+    private void handleDeleteMusic() {
+        int selectedIndex = MusicTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            MusicTable.getItems().remove(selectedIndex);
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(SongLib.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Music Selected");
+            alert.setContentText("Please select some Music in the table.");
+
+            alert.showAndWait();
         }
     }
 }

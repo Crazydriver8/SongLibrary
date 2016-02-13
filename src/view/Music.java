@@ -1,5 +1,9 @@
 package view;
 
+/**
+ * author Bilal Bari and Brandon Berrios
+ */
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

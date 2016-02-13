@@ -1,4 +1,7 @@
 package application;
+/*
+ * author Bilal Bari and Brandon Berrios
+ */
 	
 import java.io.IOException;
 
@@ -28,7 +31,7 @@ public class SongLib extends Application {
     /**
      * Constructor
      */
-    public void Main() {
+    public void Constructor() {
         // Add some sample data
         MusicData.add(new Music("Golddigger", "temp"));
         MusicData.add(new Music("Waves", "temp"));
