@@ -14,9 +14,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import model.Music;
 
-public class SongLibraryView {
-
+public class SongLibraryController {
+	@FXML ListView<String> listView;
 	@FXML Button add;
 	@FXML Button edit;
 	@FXML Button delete;
@@ -28,13 +29,16 @@ public class SongLibraryView {
 	ListView<String> list = new ListView<String>();
 	ObservableList<String> data = FXCollections.observableArrayList("temp", "temp");
 	
+	public void start() {
+		listView.setItems(data);
+	}
 	//set up the list view
-	public ListView<SongDetail> getListView(ObservableList<SongDetail> obList) {
-		ListView<SongDetail> listView = new ListView<SongDetail>(obList);
+	public ListView<Music> getListView(ObservableList<Music> obList) {
+		ListView<Music> listView = new ListView<Music>(obList);
         listView.setPrefSize(200, 250);
         listView.setEditable(true);
         
-        listView.getSelectionModel().selectedItemProperty().addListener(
+        /*listView.getSelectionModel().selectedItemProperty().addListener(
         	new ChangeListener<String>() {
     	       	@SuppressWarnings("unused")
 				public void changed(ObservableValue<? extends String> ov, String oldVal, String newVal) {
@@ -42,7 +46,7 @@ public class SongLibraryView {
     	       		//behavior for viewing data associated with name
     	       	}
         	}
-        );
+        );*/
         
         return listView;
 	}
