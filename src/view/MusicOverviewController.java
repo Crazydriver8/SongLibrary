@@ -48,9 +48,9 @@ public class MusicOverviewController {
     @FXML
     private void initialize() {
         // Initialize the Music table with the two columns.
-        SongTitleColumn.setCellFactory(cellData -> cellData.getValue().SongTitleProperty());
+        SongTitleColumn.setCellFactory(cellData -> ((Object) cellData).getValue().SongTitleProperty());
        
-		ArtistColumn.setCellFactory(cellData -> cellData.getValue().ArtistProperty());
+		ArtistColumn.setCellFactory(cellData -> ((Object) cellData).getValue().ArtistProperty());
     }
 
     /**
@@ -59,11 +59,12 @@ public class MusicOverviewController {
      * 
      * @param SongLib
      */
-    public <SongLib> void setSongLib(SongLib SongLib) {
+    @SuppressWarnings("unchecked")
+	public <SongLib> void setSongLib(view.SongLib SongLib) {
         this.SongLib = SongLib;
 
         // Add observable list data to the table
-        MusicTable.setItems(((Object) SongLib).getMusicData());
+        MusicTable.setItems(((SongLib) SongLib).getMusicData());
     }
     
     /**
