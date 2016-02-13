@@ -36,6 +36,10 @@ public class Main extends Application {
 			AnchorPane root = (AnchorPane)loader.load();
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			MusicOverviewController control = loader.getController();
+			control.start();
+			
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
