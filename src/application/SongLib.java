@@ -3,9 +3,6 @@ package application;
  * author Bilal Bari and Brandon Berrios
  */
 	
-import java.io.IOException;
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 
 
-public class SongLib extends Application {
+public class SongLib {
 	
 
     private Stage primaryStage;
@@ -55,8 +52,7 @@ public class SongLib extends Application {
     // ... THE REST OF THE CLASS ...
 	
     
-	@Override
-	public void start(Stage primaryStage) {
+	public void init(Stage primaryStage) {
 	        this.primaryStage = primaryStage;
 	        this.primaryStage.setTitle("Song Library");
 	        
@@ -68,20 +64,12 @@ public class SongLib extends Application {
 	    }
 
 	private void showSongOverview() {
-		 try {
-		        // Load song overview.
-		        FXMLLoader loader = new FXMLLoader();
-		        loader.setLocation(SongLib.class.getResource("view/songOverview.fxml"));
-		        AnchorPane personOverview = (AnchorPane) loader.load();
-
-
-		        // Give the controller access to the main app.
-		        MusicOverviewController controller = loader.getController();
-		        controller.setSongLib(this);
-
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    }
+		 // Load song overview.
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(SongLib.class.getResource("view/songOverview.fxml"));
+		// Give the controller access to the main app.
+		MusicOverviewController controller = loader.getController();
+		controller.setSongLib(this);
 		}		
 	
 
@@ -93,19 +81,11 @@ public class SongLib extends Application {
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
-			MusicOverviewController control = loader.getController();
-			
-			
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	public static void main(String[] args) {
-		launch(args);
 	}
 
 	public Stage getPrimaryStage() {
